@@ -1,4 +1,4 @@
-from projeto_final_POO import Medicamentos
+from classes import Medicamentos
 
 class MedicamentosQuimioterapicos(Medicamentos):
 

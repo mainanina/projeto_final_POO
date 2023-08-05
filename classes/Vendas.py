@@ -1,5 +1,5 @@
 from datetime import datetime
-from projeto_final_POO import Clientes
+from classes import Clientes
 
 class Vendas:
 
