@@ -1,3 +1,5 @@
+from classes import Clientes, Laboratorios, Medicamentos, MedicamentosFitoterapicos, MedicamentosQuimioterapicos, Vendas
+
 def menu():
     '''
         Função principal que inicializa o menu e faz a chamada das funções
