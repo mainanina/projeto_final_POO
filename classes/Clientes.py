@@ -2,6 +2,8 @@ from datetime import date
 
 class Clientes:
 
+    cadastro_clientes = []
+
     def __init__(self, cpf: str, nome: str, dn: date): 
         self._cpf = cpf
         self._nome = nome
@@ -18,15 +20,23 @@ class Clientes:
     @property
     def dn(self):
         return self._dn
-    
-    @cpf.setter
-    def cpf(self, cpf):
-        self._cpf = cpf
 
     @nome.setter
     def nome(self, nome):
         self._nome = nome
 
-    @dn.setter
-    def dn(self, dn):
-        self._dn = dn
+
+    def cadastrar_cliente(self, cpf: str, nome: str, dn: date):
+        cliente =  Clientes(cpf, nome, dn)
+        self.cadastro_cliente.append(cliente)
+        print(f"Cliente {nome} cadastrado com sucesso!")
+        return cliente
+
+
+    def buscar_cliente(self, cpf: str):
+        resultado = [cliente for cliente in self.cadastro_clientes if cliente.cpf == "cpf"]
+        if len(resultado) == 0:
+            print("CPF não encontrado")
+        else: 
+            print(f"Cliente encontrado: {str(resultado[0])}")
+            return resultado[0]
