@@ -1,4 +1,5 @@
 from classes import Clientes, Laboratorios, Medicamentos, MedicamentosFitoterapicos, MedicamentosQuimioterapicos, Vendas
+from uteis.relatorios import relatorio_cliente
 
 def menu():
     '''
@@ -26,7 +27,7 @@ def menu():
     
     # NO 3 é ou?? Ou tem que escolher?
     sub_menu_relatorios = """
-        Qual o relatório que você deseja omitir?
+        Qual o relatório que você deseja emitir?
         1 - Lista de clientes
         2 - Lista de medicamentos
         3 - Lista de quimioterápicos e fitoterápicos
