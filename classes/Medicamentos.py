@@ -1,10 +1,13 @@
 class Medicamentos:
 
-    def __init__(self, nome: str, pp_composto: str, lab: str, descricao: str):
+    cadastro_medicamentos = []
+
+    def __init__(self, nome: str, pp_composto: str, lab: str, descricao: str, valor: float):
         self._nome = nome
         self._pp_composto = pp_composto
         self._laboratorio = lab
         self._descricao = descricao
+        self._valor = valor
 
     @property
     def nome(self):
@@ -22,6 +25,10 @@ class Medicamentos:
     def descricao(self):
         return self._descricao
     
+    @property
+    def valor(self):
+        return self._valor
+    
     @nome.setter
     def nome(self, nome):
         self._nome = nome
@@ -37,3 +44,19 @@ class Medicamentos:
     @descricao.setter
     def descricao(self, descricao):
         self._descricao = descricao
+
+    @valor.setter
+    def valor(self, valor):
+        self._valor = valor
+
+    def buscar_medicamento(self, nome = None, fabricante = None, descricao = None):
+        if nome is not None:
+            resultado = [med for med in self.cadastro_medicamentos if med.nome == nome]
+        elif fabricante is not None:
+            resultado = [med for med in self.cadastro_medicamentos if med.laboratorio == fabricante]
+        elif descricao is not None:
+            resultado = [med for med in self.cadastro_medicamentos if descricao in med.descricao]
+        if len(resultado) == 0:
+            print(f"Não encontrado resultado para busca desse medicamento.")
+        else: 
+            print(f"Medicamentos encontrados: {str(resultado)}")

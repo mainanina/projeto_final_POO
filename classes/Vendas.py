@@ -3,11 +3,11 @@ from classes import Clientes
 
 class Vendas:
 
-    def __init__(self, dt_hr_venda: datetime, prod_vend: list, cliente: Clientes, valor: float):
+    def __init__(self, dt_hr_venda: datetime, prod_vend: dict, cliente: Clientes):
         self._hora_venda = dt_hr_venda
         self._produtos = prod_vend
         self._cliente = cliente
-        self._valor = valor
+        self._valor = self.calcular_valor_venda(prod_vend)
 
     @property
     def hora_venda(self):
@@ -40,3 +40,18 @@ class Vendas:
     @valor.setter
     def valor(self, valor):
         self._valor = valor
+
+    def calcular_valor_venda(self):
+        total_venda = 0
+        for qtdd, item in self.prod_vend:
+            parcial = qtdd * item.valor
+            total_venda +=parcial
+        valor_final = self.aplicar_desconto(self.cliente, total_venda)
+        return valor_final
+    
+    def aplicar_desconto(self, total_venda: float):
+        if self.cliente.calcular_idade()>65:
+            valor_final = total_venda * 0.8
+        elif total_venda>150:
+            valor_final = total_venda * 0.9
+        return valor_final
