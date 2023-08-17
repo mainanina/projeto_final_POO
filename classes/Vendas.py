@@ -1,5 +1,5 @@
 from datetime import datetime
-from classes import Clientes
+from classes.clientes import Clientes
 
 class Vendas:
 

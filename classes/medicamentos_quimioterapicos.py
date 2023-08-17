@@ -1,6 +1,6 @@
-from classes import Medicamentos
+from classes import medicamentos
 
-class MedicamentosQuimioterapicos(Medicamentos):
+class MedicamentosQuimioterapicos(medicamentos.Medicamentos):
 
     def __init__(self, nome: str, pp_composto: str, lab: str, descricao: str, valor: float, receita: bool):
         super().__init__(nome, pp_composto, lab, descricao, valor)

@@ -1,4 +1,8 @@
-from classes import Clientes, Medicamentos, MedicamentosQuimioterapicos, MedicamentosFitoterapicos, Vendas
+from classes.clientes import Clientes
+from classes.medicamentos import Medicamentos
+from classes.medicamentos_fitoterapicos import MedicamentosFitoterapicos
+from classes.medicamentos_quimioterapicos import MedicamentosQuimioterapicos
+from classes.vendas import Vendas
 
 def criar_relatorio_cliente():
     print("RELATÓRIO: Listagem de Cientes")

@@ -1,5 +1,10 @@
-from classes import Clientes, Laboratorios, Medicamentos, MedicamentosFitoterapicos, MedicamentosQuimioterapicos, Vendas
-from uteis.relatorios import relatorio_cliente
+from classes.clientes import Clientes
+from classes.medicamentos import Medicamentos
+from classes.medicamentos_fitoterapicos import MedicamentosFitoterapicos
+from classes.medicamentos_quimioterapicos import MedicamentosQuimioterapicos
+from classes.vendas import Vendas
+from uteis import relatorios
+
 
 def menu():
     '''
@@ -16,7 +21,6 @@ def menu():
         6 - Emitir Relatórios
         7 - Emitir Relatório de vendas do dia e sair\n
         """
-    #vendas do dia com 7? ou 6?
 
     sub_menu_busca_med = """
         O que você quer usar para buscar o medicamento?
@@ -25,7 +29,6 @@ def menu():
         3 - Descrição Parcial
         """
     
-    # NO 3 é ou?? Ou tem que escolher?
     sub_menu_relatorios = """
         Qual o relatório que você deseja emitir?
         1 - Lista de clientes
