@@ -15,6 +15,7 @@ class Medicamentos:
             Principal Composto: {self.pp_composto}
             Laboratório: {self.laboratorio}
             Descrição: {self.descricao}
+            Valor: {self.valor}
             """
 
     @property
@@ -57,14 +58,13 @@ class Medicamentos:
     def valor(self, valor):
         self._valor = valor
 
-    def buscar_medicamento(self, nome = None, fabricante = None, descricao = None):
+    @staticmethod
+    def buscar_medicamento(nome = None, fabricante = None, descricao = None):
         if nome is not None:
-            resultado = [med for med in self.cadastro_medicamentos if med.nome == nome]
+            resultado = [med for med in Medicamentos.cadastro_medicamentos if med.nome == nome]
         elif fabricante is not None:
-            resultado = [med for med in self.cadastro_medicamentos if med.laboratorio == fabricante]
+            resultado = [med for med in Medicamentos.cadastro_medicamentos if med.laboratorio == fabricante]
         elif descricao is not None:
-            resultado = [med for med in self.cadastro_medicamentos if descricao in med.descricao]
-        if len(resultado) == 0:
-            print(f"Não encontrado resultado para busca desse medicamento.")
-        else: 
-            print(f"Medicamentos encontrados: {str(resultado)}")
+            resultado = [med for med in Medicamentos.cadastro_medicamentos if descricao in med.descricao]
+        return resultado
+        

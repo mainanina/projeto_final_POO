@@ -17,13 +17,6 @@ def menu():
         7 - Sair\n
         """
 
-    sub_menu_busca_med = """
-        O que você quer usar para buscar o medicamento?
-        1 - Nome
-        2 - Fabricante
-        3 - Descrição Parcial\n
-        """
-    
     sub_menu_relatorios = """
         Qual o relatório que você deseja emitir?
         1 - Lista de clientes
@@ -40,9 +33,9 @@ def menu():
         elif opcao == "2":
            chamadas_menu.interface_busca_cliente()
         elif opcao == "3":
-            pass
+            chamadas_menu.interface_cadastro_med()
         elif opcao == "4":
-            pass
+            chamadas_menu.interface_buscar_medicamento()
         elif opcao == "5":
             pass
         elif opcao == "6":
