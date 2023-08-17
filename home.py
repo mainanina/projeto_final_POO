@@ -1,4 +1,4 @@
-from helper import relatorios, chamadas_menu
+from helper import chamadas_menu, relatorios
 
 
 def menu():
@@ -16,14 +16,6 @@ def menu():
         6 - Emitir Relatórios
         7 - Sair\n
         """
-
-    sub_menu_relatorios = """
-        Qual o relatório que você deseja emitir?
-        1 - Lista de clientes
-        2 - Lista de medicamentos
-        3 - Lista de quimioterápicos e fitoterápicos
-        4 - Atendimentos do dia\n
-        """
     
     opcao = "0"
     while opcao != "7":
@@ -37,11 +29,12 @@ def menu():
         elif opcao == "4":
             chamadas_menu.interface_buscar_medicamento()
         elif opcao == "5":
-            pass
+            chamadas_menu.interface_efetuar_venda()
         elif opcao == "6":
-            pass
+            chamadas_menu.interface_emissao_relatorios()
         elif opcao == "7":
-            pass
+            print("Obrigada por utilizar o nosso sistema!\n")
+            relatorios.criar_relatorio_dia()
         else:
             print(f"Essa opção ({opcao}) não é válida!")
 

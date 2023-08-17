@@ -4,6 +4,7 @@ from classes.medicamentos import Medicamentos
 from classes.medicamentos_fitoterapicos import MedicamentosFitoterapicos
 from classes.medicamentos_quimioterapicos import MedicamentosQuimioterapicos
 from classes.vendas import Vendas
+from helper import relatorios
 import re
 
 def interface_cadastrar_cliente():
@@ -49,7 +50,7 @@ def interface_cadastro_med():
             fito.cadastrar_fitoterapico
             print(f"Fitoterápico {nome} cadastrado com sucesso!")
         else:
-            print("Opção inválida!")
+            print(f"Opção {opcao} inválida!")
 
 def interface_buscar_medicamento():
     sub_menu_busca_med = """
@@ -71,7 +72,7 @@ def interface_buscar_medicamento():
             desc = input("Digite uma descrição parcial: ")
             resultado = Medicamentos.buscar_medicamento(descricao = desc)
         else:
-            print("Opção inválida!")
+            print(f"Opção {busca} inválida!")
 
     if len(resultado) == 0:
         print(f"Não encontrado resultado para busca desse medicamento.")
@@ -89,10 +90,19 @@ def verifica_controlado():
         elif controlado.lower() == 'n':
             receita = False
         else:
-            print("Opção inválida!")
+            print(f"Opção {controlado} inválida!")
     return receita
     
+def interface_efetuar_venda():
+    # if receita:
+    #   print(f"Não se esqueça de verificar a receita do medicamento {nome}")
+    pass
 
-# NA VENDA COLOCAR
-# if receita:
-#    print(f"Não se esqueça de verificar a receita do medicamento {nome}")
+def interface_emissao_relatorios():
+    sub_menu_relatorios = """
+        Qual o relatório que você deseja emitir?
+        1 - Lista de clientes
+        2 - Lista de medicamentos
+        3 - Lista de medicamentos por tipo\n
+        """
+    pass
