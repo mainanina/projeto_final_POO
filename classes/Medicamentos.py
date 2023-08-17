@@ -9,6 +9,14 @@ class Medicamentos:
         self._descricao = descricao
         self._valor = valor
 
+    def __str__(self):
+        return f"""
+            Nome: {self.nome}
+            Principal Composto: {self.pp_composto}
+            Laboratório: {self.laboratorio}
+            Descrição: {self.descricao}
+            """
+
     @property
     def nome(self):
         return self._nome

@@ -7,6 +7,16 @@ class MedicamentosQuimioterapicos(Medicamentos):
         self._precisa_receita = receita
         if receita:
             print(f"Não se esqueça de verificar a receita do medicamento {nome}")
+    
+    def __str__(self):
+        return f"""
+            Nome: {self.nome}
+            Principal Composto: {self.pp_composto}
+            Laboratório: {self.laboratorio}
+            Descrição: {self.descricao}
+            Precisa de receita? {self.precisa_receita}
+            """
+
 
     @property
     def precisa_receita(self):

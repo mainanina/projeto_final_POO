@@ -3,6 +3,8 @@ from classes import Clientes
 
 class Vendas:
 
+    vendas_dia = []
+
     def __init__(self, dt_hr_venda: datetime, prod_vend: dict, cliente: Clientes):
         self._hora_venda = dt_hr_venda
         self._produtos = prod_vend
@@ -40,6 +42,11 @@ class Vendas:
     @valor.setter
     def valor(self, valor):
         self._valor = valor
+
+    def realizar_venda(self, dt_hr_venda: datetime, prod_vend: dict, cliente: Clientes):
+        venda = Vendas(dt_hr_venda, prod_vend, cliente)
+        self.vendas_dia.append(venda)
+        print("Venda realizada com sucesso.")
 
     def calcular_valor_venda(self):
         total_venda = 0

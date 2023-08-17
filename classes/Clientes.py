@@ -10,6 +10,14 @@ class Clientes:
         self._nome = nome
         self._dn = dn
 
+    def __str__(self):
+        return f"""
+        Nome: {self.nome}
+        Principal Composto: {self.pp_composto}
+        Laboratório: {self.laboratorio}
+        Descrição: {self.descricao}
+        """
+
     @property
     def cpf(self):
         return self._cpf
