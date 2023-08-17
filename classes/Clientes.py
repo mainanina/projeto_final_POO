@@ -13,9 +13,8 @@ class Clientes:
     def __str__(self):
         return f"""
         Nome: {self.nome}
-        Principal Composto: {self.pp_composto}
-        Laboratório: {self.laboratorio}
-        Descrição: {self.descricao}
+        CPF: {self.cpf}
+        Idade: {self.calcular_idade()}
         """
 
     @property
@@ -35,20 +34,14 @@ class Clientes:
         self._nome = nome
 
 
-    def cadastrar_cliente(self, cpf: str, nome: str, dn: date):
-        cliente =  Clientes(cpf, nome, dn)
-        self.cadastro_cliente.append(cliente)
-        print(f"Cliente {nome} cadastrado com sucesso!")
+    def cadastrar_cliente(self):
+        self.cadastro_clientes.append(self)
 
-
-    def buscar_cliente(self, cpf: str):
-        resultado = [cliente for cliente in self.cadastro_clientes if cliente.cpf == cpf]
-        if len(resultado) == 0:
-            print(f"Não encontrado cliente para o cpf {cpf}")
-        else: 
-            print(f"Cliente encontrado: {str(resultado[0])}")
+    @staticmethod
+    def buscar_cliente(cpf: str):
+        return [cliente for cliente in Clientes.cadastro_clientes if cliente.cpf == cpf]
 
     def calcular_idade(self):
-        hoje = datetime.today().date()
+        hoje = date.today()
         idade = hoje.year - self.dn.year - ((hoje.month, hoje.day) < (self.dn.month, self.dn.day))
         return idade

@@ -1,9 +1,4 @@
-from classes.clientes import Clientes
-from classes.medicamentos import Medicamentos
-from classes.medicamentos_fitoterapicos import MedicamentosFitoterapicos
-from classes.medicamentos_quimioterapicos import MedicamentosQuimioterapicos
-from classes.vendas import Vendas
-from uteis import relatorios
+from helper import relatorios, chamadas_menu
 
 
 def menu():
@@ -19,7 +14,7 @@ def menu():
         4 - Buscar medicamento
         5 - Efetuar Venda
         6 - Emitir Relatórios
-        7 - Emitir Relatório de vendas do dia e sair\n
+        7 - Sair\n
         """
 
     sub_menu_busca_med = """
@@ -37,21 +32,25 @@ def menu():
         4 - Atendimentos do dia
         """
     
-    opcao = input(menu_str)
-    if opcao == "1":
-        pass
-    elif opcao == "2":
-       pass
-    elif opcao == "3":
-        pass
-    elif opcao == "4":
-        pass
-    elif opcao == "5":
-        pass
-    elif opcao == "6":
-        pass
-    elif opcao == "7":
-        pass
+    opcao = "0"
+    while opcao != "7":
+        opcao = input(menu_str)
+        if opcao == "1":
+            chamadas_menu.interface_cadastrar_cliente()
+        elif opcao == "2":
+           chamadas_menu.interface_busca_cliente()
+        elif opcao == "3":
+            pass
+        elif opcao == "4":
+            pass
+        elif opcao == "5":
+            pass
+        elif opcao == "6":
+            pass
+        elif opcao == "7":
+            pass
+        else:
+            print(f"Essa opção ({opcao}) não é válida!")
 
 
 if __name__ == "__main__":
