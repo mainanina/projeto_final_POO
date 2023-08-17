@@ -21,7 +21,7 @@ def menu():
         O que você quer usar para buscar o medicamento?
         1 - Nome
         2 - Fabricante
-        3 - Descrição Parcial
+        3 - Descrição Parcial\n
         """
     
     sub_menu_relatorios = """
@@ -29,7 +29,7 @@ def menu():
         1 - Lista de clientes
         2 - Lista de medicamentos
         3 - Lista de quimioterápicos e fitoterápicos
-        4 - Atendimentos do dia
+        4 - Atendimentos do dia\n
         """
     
     opcao = "0"
