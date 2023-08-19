@@ -83,4 +83,4 @@ class Vendas:
         if self.desconto == 0:
             return ""
         else:
-            return f" -> houve desconto de {round(self.desconto*100)}% no valor total da venda!"
+            return f" -> houve desconto de {100-(round(self.desconto*100))}% no valor total da venda!"

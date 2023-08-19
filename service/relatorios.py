@@ -51,14 +51,14 @@ def criar_relatorio_dia():
     print(f'''
         Medicamento mais vendido no dia: 
             {remedio_mais} -> {unidades_mais_vendido} unidades
-            Valor total: {valor_mais_vendido}
+            Valor total: {round(valor_mais_vendido, 2)}
         Quantidade de pessoas atendidas: {qtdd_dia}
         Quimioterápicos vendidos no dia:
             Quantidade: {vendas_quimio["unidades"]}
-            Valor total: {vendas_quimio["valor"]}
+            Valor total: {round(vendas_quimio["valor"], 2)}
         Fitoterápicos vendidos no dia:
             Quantidade: {vendas_fito["unidades"]}
-            Valor total: {vendas_fito['valor']}
+            Valor total: {round(vendas_fito['valor'], 2)}
         ''')
     
 def obter_mais_vendido(lista: [Vendas]):
