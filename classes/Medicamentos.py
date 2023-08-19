@@ -1,8 +1,17 @@
 from classes.laboratorios import Laboratorios
 
 class Medicamentos:
-
+    '''
+        Classe para modelar Medicamentos.
+        nome: nome do remédio
+        pp_composto: principal composto do medicamento 
+        laboratorio: fabricante do medicamento
+        descricao: descrição do medicamento
+        valor: valor unitário do medicamento
+        cadastro_medicamentos: lista dos medicamentos cadastrados no sistema
+    '''
     cadastro_medicamentos = []
+
 
     def __init__(self, nome: str, pp_composto: str, lab: Laboratorios, descricao: str, valor: float):
         self._nome = nome
@@ -10,6 +19,7 @@ class Medicamentos:
         self._laboratorio = lab
         self._descricao = descricao
         self._valor = valor
+
 
     def __str__(self):
         return f"""
@@ -60,8 +70,13 @@ class Medicamentos:
     def valor(self, valor):
         self._valor = valor
 
+
     @staticmethod
     def buscar_medicamento(nome = None, fabricante = None, descricao = None):
+        '''
+        Realiza busca de medicamentos. É possível passar como parâmetro trechos do nome do medicamento,
+            do nome do laboratório ou parte da descrição
+        '''
         if nome is not None:
             resultado = [med for med in Medicamentos.cadastro_medicamentos if  nome.lower() in med.nome.lower()]
         elif fabricante is not None:
@@ -69,4 +84,3 @@ class Medicamentos:
         elif descricao is not None:
             resultado = [med for med in Medicamentos.cadastro_medicamentos if descricao.lower() in med.descricao.lower()]
         return resultado
-        
