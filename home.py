@@ -1,4 +1,8 @@
 from helper import chamadas_menu, relatorios
+from classes.clientes import Clientes
+from classes.medicamentos_fitoterapicos import MedicamentosFitoterapicos
+from classes.medicamentos_quimioterapicos import MedicamentosQuimioterapicos
+from datetime import datetime
 
 
 def menu():
@@ -38,7 +42,24 @@ def menu():
         else:
             print(f"Essa opção ({opcao}) não é válida!")
 
+def inicializar_cadastro():
+    cliente1 = Clientes("98765432987", "José da Silva", datetime.strptime("1980-10-25", "%Y-%m-%d").date())
+    Clientes.cadastrar_cliente(cliente1)
+    cliente2 = Clientes("87539036471", "Camila Ribeiro", datetime.strptime("1990-04-02", "%Y-%m-%d").date())
+    Clientes.cadastrar_cliente(cliente2)
+    cliente3 = Clientes("46990040985", "Melissa Alves", datetime.strptime("2000-07-11", "%Y-%m-%d").date())
+    Clientes.cadastrar_cliente(cliente3)
+    fito1 = MedicamentosFitoterapicos("Maracujina", "Maracujae Paxis", "Ache", "Calmante natural à base de plantas", 24.98)
+    MedicamentosFitoterapicos.cadastrar_fitoterapico(fito1)
+    fito2 = MedicamentosFitoterapicos("Dormex", "Melissa officinalis", "Abex", "Tratamento a base de plantas de combate à insônia e à ansiedade", 19.35)
+    MedicamentosFitoterapicos.cadastrar_fitoterapico(fito2)
+    quimio1 = MedicamentosQuimioterapicos("Onconex", "Minezantrol", "SNFC", "Quimioterápico para tratamento do câncer de intestino tipo 3")
+    MedicamentosQuimioterapicos.cadastrar_quimioterapico(quimio1)
+    quimio2 = MedicamentosQuimioterapicos("Denolet", "Finoxy", "Finnit", "Quimioterápico indicado para o tratamento de cancer de próstata")
+    MedicamentosQuimioterapicos.cadastrar_quimioterapico(quimio2)
+
 
 if __name__ == "__main__":
     print("\nBoas-vindas ao nosso sistema!")
+    inicializar_cadastro()
     menu()
