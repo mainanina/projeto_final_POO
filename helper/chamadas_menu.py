@@ -59,7 +59,8 @@ def interface_buscar_medicamento():
         O que você quer usar para buscar o medicamento?
         1 - Nome
         2 - Fabricante
-        3 - Descrição Parcial\n
+        3 - Descrição Parcial
+        4 - Retornar ao menu anterior\n
         """
     busca = "0"
     while busca not in ['1', '2', '3', '4']:
@@ -73,6 +74,8 @@ def interface_buscar_medicamento():
         elif busca == '3':
             desc = input("Digite uma descrição parcial: ")
             resultado = Medicamentos.buscar_medicamento(descricao = desc)
+        elif busca == '4':
+            return " "
         else:
             print(f"Opção {busca} inválida!")
 
@@ -82,10 +85,11 @@ def interface_buscar_medicamento():
         print("\nMedicamentos encontrados: ")
         for med in resultado:
             print(str(med))
+    return resultado[0]
 
 def verifica_controlado():
     controlado = " "
-    while controlado.lower() not in ['s']:
+    while controlado.lower() not in ['s', 'n']:
         controlado = input("Esse medicamento é controlado? Digite s ou n: ")
         if controlado.lower() == 's':
             receita = True
@@ -102,45 +106,68 @@ def interface_efetuar_venda():
         print(f'CPF {cpf} não encontrado. Realize o cadastro do cliente antes de efetuar a venda.')
     else:    
         dict_produtos = cadastrar_produtos_venda()
-        venda = Vendas(datetime.now(), dict_produtos, cliente)
+        venda = Vendas(datetime.now(), dict_produtos, cliente[0])
         venda.realizar_venda()
-        print(f"Venda realizada com sucesso.")
+        print("\nVenda realizada com sucesso.")
         print(venda)
 
 def cadastrar_produtos_venda():    
-    continuar = 's'
+    continua = 's'
     contador = 1
-    while continuar.lower() == 's':
+    dict_produtos = {}
+    while continua.lower() == 's':
         nome_produto = input(f'Digite o nome do {contador}o medicamento a ser vendido: ')
-        medicamento = Medicamentos.buscar_medicamento(nome_produto)
+        medicamento = Medicamentos.buscar_medicamento(nome=nome_produto)
         if len(medicamento) == 0:
             print("Esse medicamento ainda não está cadastrado. Iniciando cadastro: ")
             medicamento = interface_cadastro_med()
+        else:
+            medicamento = medicamento[0]
+        medicamento = confirma_medicamento(medicamento)
+        if isinstance(medicamento, MedicamentosQuimioterapicos):
+            if medicamento.precisa_receita:
+                print(f"Não se esqueça de verificar a receita do medicamento {medicamento.nome}!")
         unidades = int(input("Quantas unidades desse medicamento estão sendo vendidas? "))
-        continuar = input("Digite 's' para incluir novo medicamento na venda ou 'n' para encerrar a venda.")
+        categoria = ""
+        if isinstance(medicamento, MedicamentosFitoterapicos):
+            categoria = "f"
+        elif isinstance(medicamento, MedicamentosQuimioterapicos):
+            categoria = "q"
+        dict_produtos[medicamento.nome]={"unidades":unidades, "valor_unit": medicamento.valor, "categoria": categoria}
+        continua = input("Digite 's' para incluir novo medicamento na venda ou qualquer outra tecla para encerrar a venda: ")
+        contador +=1
+    return dict_produtos
 
-
-    # if receita:
-    #   print(f"Não se esqueça de verificar a receita do medicamento {nome}")
-    pass
+def confirma_medicamento(medicamento):
+    confirma = " "
+    med = medicamento
+    while confirma != 's':
+        confirma = input(f"Confirma inclusão do medicamento {med.nome} na compra? Digite 's' para incluir ou 'n' para realizar nova busca: ")
+        if confirma == 'n':
+            med = interface_buscar_medicamento()
+    return med
+        
 
 def interface_emissao_relatorios():
     sub_menu_relatorios = """
         Qual o relatório que você deseja emitir?
         1 - Lista de clientes
         2 - Lista de medicamentos
-        3 - Lista de medicamentos por tipo\n
+        3 - Lista de medicamentos por tipo
+        4 - Retornar ao menu anterior\n
         """
     opcao = 0
-    while opcao not in ["1", "2", "3"]:
+    while opcao not in ["1", "2", "3", "4"]:
         opcao = input(sub_menu_relatorios)
         if opcao == '1':
             relatorios.criar_relatorio_cliente()
         elif opcao == '2':
             relatorios.criar_relatorio_medicamentos()
-        elif opcao == 3:
+        elif opcao == '3':
             tipo_med = escolher_tipo_medicamento()
             relatorios.criar_relatorio_med_especifico(tipo_med)
+        elif opcao == '4':
+            return " "
         else:
             print(f"Opção {opcao} inválida!")
             

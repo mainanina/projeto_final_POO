@@ -43,10 +43,15 @@ def menu():
         else:
             print(f"Essa opção ({opcao}) não é válida!")
 
+
 def inicializar_cadastro():
+    ''' 
+        Realiza o cadastro de alguns clientes e medicamentos que podem ser utilizados como testes das 
+        funções do menu principal.
+    '''
     cliente1 = Clientes("98765432987", "José da Silva", datetime.strptime("1980-10-25", "%Y-%m-%d").date())
     Clientes.cadastrar_cliente(cliente1)
-    cliente2 = Clientes("87539036471", "Camila Ribeiro", datetime.strptime("1990-04-02", "%Y-%m-%d").date())
+    cliente2 = Clientes("87539036471", "Camila Ribeiro", datetime.strptime("1950-04-02", "%Y-%m-%d").date())
     Clientes.cadastrar_cliente(cliente2)
     cliente3 = Clientes("46990040985", "Melissa Alves", datetime.strptime("2000-07-11", "%Y-%m-%d").date())
     Clientes.cadastrar_cliente(cliente3)

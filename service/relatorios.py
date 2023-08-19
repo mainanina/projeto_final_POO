@@ -5,31 +5,29 @@ from classes.medicamentos_quimioterapicos import MedicamentosQuimioterapicos
 from classes.vendas import Vendas
 
 def criar_relatorio_cliente():
-    print("RELATÓRIO: Listagem de Cientes")
+    print("\nRELATÓRIO: Listagem de Cientes")
     print("-----------------------------------------------------")
-    lista_clientes = (Clientes.cadastro_clientes).sort()
+    lista_clientes = sorted(Clientes.cadastro_clientes, key=lambda cliente: cliente.nome)
     for cliente in lista_clientes:
         print(cliente)
-        print("--------------------------------------------")
 
 def criar_relatorio_medicamentos():
-    print("RELATÓRIO: Listagem de Medicamentos")
+    print("\nRELATÓRIO: Listagem de Medicamentos")
     print("-----------------------------------------------------")
-    lista_med = (Medicamentos.cadastro_medicamentos).sort()
+    lista_med = sorted(Medicamentos.cadastro_medicamentos, key=lambda med: med.nome)
     for med in lista_med:
         print(med)
-        print("--------------------------------------------")
 
 def criar_relatorio_med_especifico(classe: str):
-    lista_med = (Medicamentos.cadastro_medicamentos).sort()
+    lista_med = sorted(Medicamentos.cadastro_medicamentos, key=lambda med: med.nome)
     selecionados = []
     if classe == "q":
         selecionados = [med for med in lista_med if isinstance(med, MedicamentosQuimioterapicos)]
-        print("RELATÓRIO: Listagem de Quimioterápicos")
+        print("\nRELATÓRIO: Listagem de Quimioterápicos")
         print("-----------------------------------------------------")
     elif classe == "f":
         selecionados = [med for med in lista_med if isinstance(med, MedicamentosFitoterapicos)]
-        print("RELATÓRIO: Listagem de Fitoterápicos")
+        print("\nRELATÓRIO: Listagem de Fitoterápicos")
         print("-----------------------------------------------------")
     for med in selecionados:
         print(med)
@@ -39,33 +37,39 @@ def criar_relatorio_dia():
     print("RELATÓRIO: Atendimentos do dia")
     print("-----------------------------------------------------")
     remedio_mais, unidades_mais_vendido, valor_mais_vendido = obter_mais_vendido(lista_vendas)
-    qttd_dia = calcular_clientes_atendidos(lista_vendas)
-    vendas_quimio = [venda for venda in lista_vendas if isinstance(venda.prod_vend, MedicamentosQuimioterapicos)]
-    vendas_fito = [venda for venda in lista_vendas if isinstance(venda.prod_vend, MedicamentosFitoterapicos)]
-    qtt_quimio, valor_quimio = calcular_vendas(vendas_quimio)
-    qtt_fito, valor_fito = calcular_vendas(vendas_fito)
+    qtdd_dia = calcular_clientes_atendidos(lista_vendas)
+    vendas_quimio = {'unidades': 0, 'valor': 0}
+    vendas_fito = {'unidades': 0, 'valor': 0}
+    for venda in lista_vendas:
+        for item, valor in venda.produtos.items():
+            if valor['categoria'] == 'f':
+                vendas_fito['unidades'] += valor['unidades']
+                vendas_fito['valor'] += (valor['unidades']* valor['valor_unit'])
+            elif valor['categoria'] == 'q':
+                vendas_quimio['unidades'] += valor['unidades']
+                vendas_quimio['valor'] += (valor['unidades']* valor['valor_unit'])
     print(f'''
         Medicamento mais vendido no dia: 
             {remedio_mais} -> {unidades_mais_vendido} unidades
             Valor total: {valor_mais_vendido}
-        Quantidade de pessoas atendidas: {qttd_dia}
+        Quantidade de pessoas atendidas: {qtdd_dia}
         Quimioterápicos vendidos no dia:
-            Quantidade: {qtt_quimio}
-            Valor total: {valor_quimio}
+            Quantidade: {vendas_quimio["unidades"]}
+            Valor total: {vendas_quimio["valor"]}
         Fitoterápicos vendidos no dia:
-            Quantidade: {qtt_fito}
-            Valor total: {valor_fito}
+            Quantidade: {vendas_fito["unidades"]}
+            Valor total: {vendas_fito['valor']}
         ''')
     
 def obter_mais_vendido(lista: [Vendas]):
     vendas_dia = {}
     for venda in lista:
-        for produto, qttd in venda.prod_vend:
-            if produto.nome not in vendas_dia.keys():
-                vendas_dia[produto.nome] = {"quantidade": qttd, "valor": qttd * produto.valor}
+        for produto, valor in venda.produtos.items():
+            if produto not in vendas_dia.keys():
+                vendas_dia[produto] = {"quantidade": valor['unidades'], "valor": valor['unidades'] * valor['valor_unit']}
             else: 
-                vendas_dia[produto.nome]["quantidade"] += qttd
-                vendas_dia[produto.nome]["valor"] += qttd * produto.valor
+                vendas_dia[produto]["quantidade"] += valor['unidades']
+                vendas_dia[produto]["valor"] += valor['unidades'] * valor['valor_unit']
     item_mais_vendido = max(vendas_dia, key=lambda item: vendas_dia[item]["quantidade"], default=0)
     if item_mais_vendido != 0:
         unidades_mais_vendido = vendas_dia[item_mais_vendido]["quantidade"]
@@ -79,12 +83,3 @@ def obter_mais_vendido(lista: [Vendas]):
 def calcular_clientes_atendidos(lista: [Vendas]):
     clientes = set([venda.cliente.nome for venda in lista])
     return len(clientes)
-
-def calcular_vendas(lista: [Vendas]):
-    soma_unidades = 0
-    valor_total = 0
-    for venda in lista:
-        for produto, qttd in venda.prod_venda:
-            soma_unidades += qttd
-            valor_total += (qttd*produto.valor)
-    return soma_unidades, valor_total

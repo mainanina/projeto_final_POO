@@ -9,13 +9,14 @@ class Vendas:
         self._hora_venda = dt_hr_venda
         self._produtos = prod_vend
         self._cliente = cliente
-        self._valor = self.calcular_valor_venda(prod_vend)
+        self._valor , self._desconto= self.calcular_valor_venda()
 
     def __str__(self):
         return f'''
-        Cliente: {self.nome} - CPF: {self.cpf}
+        Data e Horário: {self.hora_venda}
+        Cliente: {self.cliente.nome} - CPF: {self.cliente.cpf}
         {self.mostrar_produtos()}
-        Valor total: R$ {round(self.valor, 2)}
+        Valor total: R$ {round(self.valor, 2)} {self.mostrar_desconto()}
         '''
 
     @property
@@ -34,6 +35,10 @@ class Vendas:
     def valor(self):
         return self._valor
     
+    @property
+    def desconto(self):
+        return self._desconto
+    
     @hora_venda.setter
     def hora_venda(self, hora_venda):
         self._hora_venda = hora_venda
@@ -46,28 +51,36 @@ class Vendas:
     def cliente(self, cliente):
         self._cliente = cliente
 
-    @valor.setter
-    def valor(self, valor):
-        self._valor = valor
-
     def realizar_venda(self):
         self.vendas_dia.append(self)
 
     def calcular_valor_venda(self):
         total_venda = 0
-        for qtdd, item in self.prod_vend:
-            parcial = qtdd * item.valor
+        print('aqui: ', self.produtos)
+        for item, valor in self.produtos.items():
+            parcial = valor['unidades'] * valor["valor_unit"]
             total_venda +=parcial
-        valor_final = self.aplicar_desconto(self.cliente, total_venda)
-        return valor_final
+        desconto = self.calcular_desconto(total_venda)
+        if desconto !=0:
+            total_venda = total_venda*desconto
+        return total_venda, desconto
     
-    def aplicar_desconto(self, total_venda: float):
+    def calcular_desconto(self, total_venda: float):
+        desconto = 0
         if self.cliente.calcular_idade()>65:
-            valor_final = total_venda * 0.8
+            desconto = 0.8
         elif total_venda>150:
-            valor_final = total_venda * 0.9
-        return valor_final
+            desconto = 0.9
+        return desconto
     
     def mostrar_produtos(self):
-        for chave, valor in self.produtos:
-            print(f'{chave.nome}: {valor} unidades')
+        lista = []
+        for item, valor in self.produtos.items():
+            lista.append(f"{item}: {valor['unidades']} unidade(s)")
+        return lista
+
+    def mostrar_desconto(self):
+        if self.desconto == 0:
+            return ""
+        else:
+            return f" -> houve desconto de {round(self.desconto*100)}% no valor total da venda!"

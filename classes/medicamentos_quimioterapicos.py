@@ -13,6 +13,7 @@ class MedicamentosQuimioterapicos(medicamentos.Medicamentos):
             Laboratório: {self.laboratorio}
             Descrição: {self.descricao}
             Valor: {self.valor}
+            Classe: Quimioterápico
             Precisa de receita? {self.precisa_receita}
             """
 

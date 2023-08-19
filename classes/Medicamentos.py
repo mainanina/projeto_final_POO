@@ -61,10 +61,10 @@ class Medicamentos:
     @staticmethod
     def buscar_medicamento(nome = None, fabricante = None, descricao = None):
         if nome is not None:
-            resultado = [med for med in Medicamentos.cadastro_medicamentos if med.nome == nome]
+            resultado = [med for med in Medicamentos.cadastro_medicamentos if  nome.lower() in med.nome.lower()]
         elif fabricante is not None:
-            resultado = [med for med in Medicamentos.cadastro_medicamentos if med.laboratorio == fabricante]
+            resultado = [med for med in Medicamentos.cadastro_medicamentos if fabricante.lower() in med.laboratorio.lower()]
         elif descricao is not None:
-            resultado = [med for med in Medicamentos.cadastro_medicamentos if descricao in med.descricao]
+            resultado = [med for med in Medicamentos.cadastro_medicamentos if descricao.lower() in med.descricao.lower()]
         return resultado
         
