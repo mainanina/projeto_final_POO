@@ -3,6 +3,7 @@ from service import relatorios
 from classes.clientes import Clientes
 from classes.medicamentos_fitoterapicos import MedicamentosFitoterapicos
 from classes.medicamentos_quimioterapicos import MedicamentosQuimioterapicos
+from classes.laboratorios import Laboratorios
 from datetime import datetime
 
 
@@ -55,13 +56,13 @@ def inicializar_cadastro():
     Clientes.cadastrar_cliente(cliente2)
     cliente3 = Clientes("46990040985", "Melissa Alves", datetime.strptime("2000-07-11", "%Y-%m-%d").date())
     Clientes.cadastrar_cliente(cliente3)
-    fito1 = MedicamentosFitoterapicos("Maracujina", "Maracujae Paxis", "Ache", "Calmante natural à base de plantas", 24.98)
+    fito1 = MedicamentosFitoterapicos("Maracujina", "Maracujae Paxis", Laboratorios("Ache", "Rua Alegria, 5", "11-999994545", "Sao Paulo", "SP"), "Calmante natural à base de plantas", 24.98)
     MedicamentosFitoterapicos.cadastrar_fitoterapico(fito1)
-    fito2 = MedicamentosFitoterapicos("Dormex", "Melissa officinalis", "Abex", "Tratamento a base de plantas de combate à insônia e à ansiedade", 19.35)
+    fito2 = MedicamentosFitoterapicos("Dormex", "Melissa officinalis", Laboratorios("Abex", "Rua Harmonia, 33", "21-999987545", "Rio de Janeiro", "RJ"), "Tratamento a base de plantas de combate à insônia e à ansiedade", 19.35)
     MedicamentosFitoterapicos.cadastrar_fitoterapico(fito2)
-    quimio1 = MedicamentosQuimioterapicos("Onconex", "Minezantrol", "SNFC", "Quimioterápico para tratamento do câncer de intestino tipo 3", 76.10, True)
+    quimio1 = MedicamentosQuimioterapicos("Onconex", "Minezantrol", Laboratorios("TGUC", "Avenida Rio Branco, 103", "11-934994545", "Sao Paulo", "SP"), "Quimioterápico para tratamento do câncer de intestino tipo 3", 76.10, True)
     MedicamentosQuimioterapicos.cadastrar_quimioterapico(quimio1)
-    quimio2 = MedicamentosQuimioterapicos("Denolet", "Finoxy", "Finnit", "Quimioterápico indicado para o tratamento de câncer de próstata", 53.98, False)
+    quimio2 = MedicamentosQuimioterapicos("Denolet", "Finoxy", Laboratorios("Fytol", "Rua Almirante João, 543", "11-976594545", "Sao Paulo", "SP"), "Quimioterápico indicado para o tratamento de câncer de próstata", 53.98, False)
     MedicamentosQuimioterapicos.cadastrar_quimioterapico(quimio2)
 
 

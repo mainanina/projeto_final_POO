@@ -1,8 +1,9 @@
 from classes import medicamentos
+from classes.laboratorios import Laboratorios
 
 class MedicamentosQuimioterapicos(medicamentos.Medicamentos):
 
-    def __init__(self, nome: str, pp_composto: str, lab: str, descricao: str, valor: float, receita: bool):
+    def __init__(self, nome: str, pp_composto: str, lab: Laboratorios, descricao: str, valor: float, receita: bool):
         super().__init__(nome, pp_composto, lab, descricao, valor)
         self._precisa_receita = receita
     
@@ -10,7 +11,7 @@ class MedicamentosQuimioterapicos(medicamentos.Medicamentos):
         return f"""
             Nome: {self.nome}
             Principal Composto: {self.pp_composto}
-            Laboratório: {self.laboratorio}
+            Laboratório: {self.laboratorio.nome}
             Descrição: {self.descricao}
             Valor: {self.valor}
             Classe: Quimioterápico

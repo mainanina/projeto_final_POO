@@ -1,8 +1,10 @@
+from classes.laboratorios import Laboratorios
+
 class Medicamentos:
 
     cadastro_medicamentos = []
 
-    def __init__(self, nome: str, pp_composto: str, lab: str, descricao: str, valor: float):
+    def __init__(self, nome: str, pp_composto: str, lab: Laboratorios, descricao: str, valor: float):
         self._nome = nome
         self._pp_composto = pp_composto
         self._laboratorio = lab
@@ -13,7 +15,7 @@ class Medicamentos:
         return f"""
             Nome: {self.nome}
             Principal Composto: {self.pp_composto}
-            Laboratório: {self.laboratorio}
+            Laboratório: {self.laboratorio.nome}
             Descrição: {self.descricao}
             Valor: {self.valor}
             """
@@ -63,7 +65,7 @@ class Medicamentos:
         if nome is not None:
             resultado = [med for med in Medicamentos.cadastro_medicamentos if  nome.lower() in med.nome.lower()]
         elif fabricante is not None:
-            resultado = [med for med in Medicamentos.cadastro_medicamentos if fabricante.lower() in med.laboratorio.lower()]
+            resultado = [med for med in Medicamentos.cadastro_medicamentos if fabricante.lower() in med.laboratorio.nome.lower()]
         elif descricao is not None:
             resultado = [med for med in Medicamentos.cadastro_medicamentos if descricao.lower() in med.descricao.lower()]
         return resultado

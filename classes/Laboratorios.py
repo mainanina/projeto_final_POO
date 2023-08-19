@@ -1,4 +1,10 @@
 class Laboratorios:
+    '''
+        Classe para modelar laboratórios fabricantes de medicamentos.
+        nome: nome do laboratório
+        endereço: endereço do laboratório
+    '''
+
 
     def __init__(self, nome: str, endereco: str, telefone: str, cidade: str, estado: str): 
         self._nome = nome
@@ -6,6 +12,15 @@ class Laboratorios:
         self._telefone = telefone
         self._cidade = cidade
         self._estado = estado
+
+
+    def __str__(self):
+        return f"""
+        Nome: {self.nome}
+        Telefone: {self.telefone}
+        Endereço: {self.endereco} - {self.cidade}, {self.estado}
+        """
+
 
     @property
     def nome(self):

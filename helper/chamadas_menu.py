@@ -4,6 +4,7 @@ from classes.medicamentos import Medicamentos
 from classes.medicamentos_fitoterapicos import MedicamentosFitoterapicos
 from classes.medicamentos_quimioterapicos import MedicamentosQuimioterapicos
 from classes.vendas import Vendas
+from classes.laboratorios import Laboratorios
 from service import relatorios
 import re
 
@@ -35,7 +36,7 @@ def interface_cadastro_med():
     opcao = "0"
     nome = input("Digite o nome do medicamento: ")
     composto = input("Digite o principal composto do medicamento: ")
-    lab = input("Digite o laboratório fabricante do medicamento: ")
+    lab = incluir_laboratorio()
     descricao = input("Digite a descrição do medicamento: ")
     valor = float(input("Digite o valor do medicamento: "))
     while opcao not in ["1", "2"]:
@@ -53,6 +54,16 @@ def interface_cadastro_med():
             return fito
         else:
             print(f"Opção {opcao} inválida!")
+
+def incluir_laboratorio():
+    lab_nome = input("Digite o nome do laboratório: ")
+    lab_end = input(("Digite o endereço do laboratório: "))
+    lab_tel = input(("Digite o telefone do laboratório: "))
+    lab_cidade = input(("Digite a cidade onde está localizado o laboratório: "))
+    lab_estado = input(("Digite o estado onde está localizado o laboratório: "))
+    laboratorio = Laboratorios(lab_nome, lab_end, lab_tel, lab_cidade, lab_estado)
+    return laboratorio
+
 
 def interface_buscar_medicamento():
     sub_menu_busca_med = """
