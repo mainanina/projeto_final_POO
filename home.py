@@ -1,4 +1,5 @@
-from helper import chamadas_menu, relatorios
+from helper import chamadas_menu
+from service import relatorios
 from classes.clientes import Clientes
 from classes.medicamentos_fitoterapicos import MedicamentosFitoterapicos
 from classes.medicamentos_quimioterapicos import MedicamentosQuimioterapicos
@@ -53,9 +54,9 @@ def inicializar_cadastro():
     MedicamentosFitoterapicos.cadastrar_fitoterapico(fito1)
     fito2 = MedicamentosFitoterapicos("Dormex", "Melissa officinalis", "Abex", "Tratamento a base de plantas de combate à insônia e à ansiedade", 19.35)
     MedicamentosFitoterapicos.cadastrar_fitoterapico(fito2)
-    quimio1 = MedicamentosQuimioterapicos("Onconex", "Minezantrol", "SNFC", "Quimioterápico para tratamento do câncer de intestino tipo 3")
+    quimio1 = MedicamentosQuimioterapicos("Onconex", "Minezantrol", "SNFC", "Quimioterápico para tratamento do câncer de intestino tipo 3", 76.10, True)
     MedicamentosQuimioterapicos.cadastrar_quimioterapico(quimio1)
-    quimio2 = MedicamentosQuimioterapicos("Denolet", "Finoxy", "Finnit", "Quimioterápico indicado para o tratamento de cancer de próstata")
+    quimio2 = MedicamentosQuimioterapicos("Denolet", "Finoxy", "Finnit", "Quimioterápico indicado para o tratamento de câncer de próstata", 53.98, False)
     MedicamentosQuimioterapicos.cadastrar_quimioterapico(quimio2)
 
 

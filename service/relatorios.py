@@ -66,9 +66,14 @@ def obter_mais_vendido(lista: [Vendas]):
             else: 
                 vendas_dia[produto.nome]["quantidade"] += qttd
                 vendas_dia[produto.nome]["valor"] += qttd * produto.valor
-    item_mais_vendido = max(vendas_dia, key=lambda item: vendas_dia[item]["quantidade"])
-    unidades_mais_vendido = vendas_dia[item_mais_vendido]["quantidade"]
-    valor_mais_vendido = vendas_dia[item_mais_vendido]["valor"]
+    item_mais_vendido = max(vendas_dia, key=lambda item: vendas_dia[item]["quantidade"], default=0)
+    if item_mais_vendido != 0:
+        unidades_mais_vendido = vendas_dia[item_mais_vendido]["quantidade"]
+        valor_mais_vendido = vendas_dia[item_mais_vendido]["valor"]
+    else:
+        item_mais_vendido = "Não houve vendas no dia"
+        unidades_mais_vendido = 0
+        valor_mais_vendido = 0
     return item_mais_vendido, unidades_mais_vendido, valor_mais_vendido
 
 def calcular_clientes_atendidos(lista: [Vendas]):

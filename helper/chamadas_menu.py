@@ -4,7 +4,7 @@ from classes.medicamentos import Medicamentos
 from classes.medicamentos_fitoterapicos import MedicamentosFitoterapicos
 from classes.medicamentos_quimioterapicos import MedicamentosQuimioterapicos
 from classes.vendas import Vendas
-from helper import relatorios
+from service import relatorios
 import re
 
 def interface_cadastrar_cliente():
@@ -45,10 +45,12 @@ def interface_cadastro_med():
             quimio = MedicamentosQuimioterapicos(nome, composto, lab, descricao, valor, receita)
             quimio.cadastrar_quimioterapico()
             print(f"Quimioterápico {nome} cadastrado com sucesso!")
+            return quimio
         elif opcao =="2":
             fito = MedicamentosFitoterapicos(nome, composto, lab, descricao, valor)
             fito.cadastrar_fitoterapico
             print(f"Fitoterápico {nome} cadastrado com sucesso!")
+            return fito
         else:
             print(f"Opção {opcao} inválida!")
 
@@ -94,6 +96,30 @@ def verifica_controlado():
     return receita
     
 def interface_efetuar_venda():
+    cpf = input('Insira o cpf do cliente que está efetuando a venda: ')
+    cliente = Clientes.buscar_cliente(cpf)
+    if len(cliente) == 0:
+        print(f'CPF {cpf} não encontrado. Realize o cadastro do cliente antes de efetuar a venda.')
+    else:    
+        dict_produtos = cadastrar_produtos_venda()
+        venda = Vendas(datetime.now(), dict_produtos, cliente)
+        venda.realizar_venda()
+        print(f"Venda realizada com sucesso.")
+        print(venda)
+
+def cadastrar_produtos_venda():    
+    continuar = 's'
+    contador = 1
+    while continuar.lower() == 's':
+        nome_produto = input(f'Digite o nome do {contador}o medicamento a ser vendido: ')
+        medicamento = Medicamentos.buscar_medicamento(nome_produto)
+        if len(medicamento) == 0:
+            print("Esse medicamento ainda não está cadastrado. Iniciando cadastro: ")
+            medicamento = interface_cadastro_med()
+        unidades = int(input("Quantas unidades desse medicamento estão sendo vendidas? "))
+        continuar = input("Digite 's' para incluir novo medicamento na venda ou 'n' para encerrar a venda.")
+
+
     # if receita:
     #   print(f"Não se esqueça de verificar a receita do medicamento {nome}")
     pass
@@ -105,4 +131,22 @@ def interface_emissao_relatorios():
         2 - Lista de medicamentos
         3 - Lista de medicamentos por tipo\n
         """
-    pass
+    opcao = 0
+    while opcao not in ["1", "2", "3"]:
+        opcao = input(sub_menu_relatorios)
+        if opcao == '1':
+            relatorios.criar_relatorio_cliente()
+        elif opcao == '2':
+            relatorios.criar_relatorio_medicamentos()
+        elif opcao == 3:
+            tipo_med = escolher_tipo_medicamento()
+            relatorios.criar_relatorio_med_especifico(tipo_med)
+        else:
+            print(f"Opção {opcao} inválida!")
+            
+
+def escolher_tipo_medicamento():
+    tipo = " "
+    while tipo.lower() not in ['f', 'q']:
+        tipo = input("Digite 'f' para listar fitoterápicos ou 'q' para quimioterápicos: ")
+    return tipo

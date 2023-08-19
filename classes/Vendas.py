@@ -11,6 +11,13 @@ class Vendas:
         self._cliente = cliente
         self._valor = self.calcular_valor_venda(prod_vend)
 
+    def __str__(self):
+        return f'''
+        Cliente: {self.nome} - CPF: {self.cpf}
+        {self.mostrar_produtos()}
+        Valor total: R$ {round(self.valor, 2)}
+        '''
+
     @property
     def hora_venda(self):
         return self._hora_venda
@@ -43,10 +50,8 @@ class Vendas:
     def valor(self, valor):
         self._valor = valor
 
-    def realizar_venda(self, dt_hr_venda: datetime, prod_vend: dict, cliente: Clientes):
-        venda = Vendas(dt_hr_venda, prod_vend, cliente)
-        self.vendas_dia.append(venda)
-        print("Venda realizada com sucesso.")
+    def realizar_venda(self):
+        self.vendas_dia.append(self)
 
     def calcular_valor_venda(self):
         total_venda = 0
@@ -62,3 +67,7 @@ class Vendas:
         elif total_venda>150:
             valor_final = total_venda * 0.9
         return valor_final
+    
+    def mostrar_produtos(self):
+        for chave, valor in self.produtos:
+            print(f'{chave.nome}: {valor} unidades')
