@@ -8,7 +8,12 @@ from classes.laboratorios import Laboratorios
 from service import relatorios
 import re
 
+
 def interface_cadastrar_cliente():
+    '''
+    Faz a interface com usuário via terminal para cadastrar novo cliente recebendo cpf, nome e data
+    de nascimento.
+    '''
     cpf = input("Digite o cpf do cliente: ")
     nome = input("Digite o nome do cliente: ")
     data_string = input("Digite a data de nascimento no formato aaaa-mm-dd: ")
@@ -19,12 +24,20 @@ def interface_cadastrar_cliente():
     cliente.cadastrar_cliente()
     print(f"Cliente {nome} cadastrado com sucesso!")
 
+
 def validar_data(data: str):
+    '''
+    Recebe uma string e valida se a mesma está no formato adequado de data para ser usada pela biblioteca datetime.
+    '''
     padrao = r"\d{4}-\d{2}-\d{2}"
     if re.match(padrao, data):
         return True
 
+
 def interface_busca_cliente():
+    '''
+    Faz a interface com usuário via terminal para buscar cliente cadastrado através do cpf.
+    '''
     cpf = input("Digite o cpf do cliente que deseja encontrar: ")
     resultado = Clientes.buscar_cliente(cpf)
     if len(resultado) == 0:
@@ -32,7 +45,13 @@ def interface_busca_cliente():
     else: 
         print(f"Cliente encontrado: {str(resultado[0])}")
 
+
 def interface_cadastro_med():
+    '''
+    Faz a interface com usuário via terminal para cadastrar novo medicamento, recebendo descrição, informações do laboratório
+    fabricante, principal composto, descrição do medicamento e valor. Recebe também informação sobre o tipo do medicamento e 
+    o cadastra na classe adequada.
+    '''
     opcao = "0"
     nome = input("Digite o nome do medicamento: ")
     composto = input("Digite o principal composto do medicamento: ")
@@ -55,7 +74,11 @@ def interface_cadastro_med():
         else:
             print(f"Opção {opcao} inválida!")
 
+
 def incluir_laboratorio():
+    '''
+    Faz a interface com usuário via terminal para incluir as informações sobre um laboratório.
+    '''
     lab_nome = input("Digite o nome do laboratório: ")
     lab_end = input(("Digite o endereço do laboratório: "))
     lab_tel = input(("Digite o telefone do laboratório: "))
@@ -66,6 +89,10 @@ def incluir_laboratorio():
 
 
 def interface_buscar_medicamento():
+    '''
+    Faz a interface com usuário via terminal para cadastrar buscar medicamento cadastrado a partir do nome, fabricante
+    ou descrição parcial.
+    '''
     sub_menu_busca_med = """
         O que você quer usar para buscar o medicamento?
         1 - Nome
@@ -98,7 +125,12 @@ def interface_buscar_medicamento():
             print(str(med))
     return resultado[0]
 
+
 def verifica_controlado():
+    '''
+    Faz a interface com usuário via terminal para receber a informação se determinado medicamento é controlado ou não
+    e cria a partir dessa informação uma variável booleana que é retornada.
+    '''
     controlado = " "
     while controlado.lower() not in ['s', 'n']:
         controlado = input("Esse medicamento é controlado? Digite s ou n: ")
@@ -109,8 +141,14 @@ def verifica_controlado():
         else:
             print(f"Opção {controlado} inválida!")
     return receita
-    
+
+
 def interface_efetuar_venda():
+    '''
+    Faz a interface com usuário via terminal para cadastrar nova venda, com data atual, cliente e um dicionário dos 
+    produtos vendidos.
+    Caso o CPF do cliente não esteja cadastrado, retorna ao menu principal para realizar o cadastro.
+    '''
     cpf = input('Insira o cpf do cliente que está efetuando a venda: ')
     cliente = Clientes.buscar_cliente(cpf)
     if len(cliente) == 0:
@@ -122,7 +160,16 @@ def interface_efetuar_venda():
         print("\nVenda realizada com sucesso.")
         print(venda)
 
-def cadastrar_produtos_venda():    
+
+def cadastrar_produtos_venda():
+    '''
+    Faz a interface com usuário para criar um dicionário de produtos para uma venda, buscando o
+    medicamento a partir do nome.
+    O dicionário tem como chave o nome do medicamento e como valor outro dicionário, que por
+    sua vez tem como chaves as unidades do medicamento vendidas, o valor unitário e a categoria
+    ("f" para fitoterápicos e "q" para quimioterápicos).
+    No caso dos quimioterápicos que necessitem de receita, exibe lembrete para que ela seja consultada.
+    '''    
     continua = 's'
     contador = 1
     dict_produtos = {}
@@ -135,21 +182,24 @@ def cadastrar_produtos_venda():
         else:
             medicamento = medicamento[0]
         medicamento = confirma_medicamento(medicamento)
+        categoria = ""
         if isinstance(medicamento, MedicamentosQuimioterapicos):
             if medicamento.precisa_receita:
                 print(f"Não se esqueça de verificar a receita do medicamento {medicamento.nome}!")
-        unidades = int(input("Quantas unidades desse medicamento estão sendo vendidas? "))
-        categoria = ""
-        if isinstance(medicamento, MedicamentosFitoterapicos):
-            categoria = "f"
-        elif isinstance(medicamento, MedicamentosQuimioterapicos):
             categoria = "q"
+        elif isinstance(medicamento, MedicamentosFitoterapicos):
+            categoria = "f"
+        unidades = int(input("Quantas unidades desse medicamento estão sendo vendidas? "))
         dict_produtos[medicamento.nome]={"unidades":unidades, "valor_unit": medicamento.valor, "categoria": categoria}
         continua = input("Digite 's' para incluir novo medicamento na venda ou qualquer outra tecla para encerrar a venda: ")
         contador +=1
     return dict_produtos
 
+
 def confirma_medicamento(medicamento):
+    '''
+    Confirma se o medicamento buscado deve ser incluído na compra.
+    '''
     confirma = " "
     med = medicamento
     while confirma != 's':
@@ -160,6 +210,10 @@ def confirma_medicamento(medicamento):
         
 
 def interface_emissao_relatorios():
+    '''
+    Faz a interface com usuário via terminal para emitir novo relatório, apresentando um submenu de escolha
+    do tipo de relatório.
+    '''
     sub_menu_relatorios = """
         Qual o relatório que você deseja emitir?
         1 - Lista de clientes
@@ -184,6 +238,10 @@ def interface_emissao_relatorios():
             
 
 def escolher_tipo_medicamento():
+    '''
+    Faz a interface com usuário via terminal para escolha de um tipo especifico de remédio para relatórios
+    específicos.
+    '''
     tipo = " "
     while tipo.lower() not in ['f', 'q']:
         tipo = input("Digite 'f' para listar fitoterápicos ou 'q' para quimioterápicos: ")
