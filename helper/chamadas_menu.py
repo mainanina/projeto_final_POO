@@ -68,7 +68,7 @@ def interface_cadastro_med():
             return quimio
         elif opcao =="2":
             fito = MedicamentosFitoterapicos(nome, composto, lab, descricao, valor)
-            fito.cadastrar_fitoterapico
+            fito.cadastrar_fitoterapico()
             print(f"Fitoterápico {nome} cadastrado com sucesso!")
             return fito
         else:
@@ -123,7 +123,7 @@ def interface_buscar_medicamento():
         print("\nMedicamentos encontrados: ")
         for med in resultado:
             print(str(med))
-    return resultado[0]
+        return resultado[0]
 
 
 def verifica_controlado():
@@ -202,9 +202,9 @@ def confirma_medicamento(medicamento):
     '''
     confirma = " "
     med = medicamento
-    while confirma != 's':
+    while confirma.lower() != 's':
         confirma = input(f"Confirma inclusão do medicamento {med.nome} na compra? Digite 's' para incluir ou 'n' para realizar nova busca: ")
-        if confirma == 'n':
+        if confirma.lower() == 'n':
             med = interface_buscar_medicamento()
     return med
         
