@@ -185,7 +185,7 @@ def cadastrar_produtos_venda():
         categoria = ""
         if isinstance(medicamento, MedicamentosQuimioterapicos):
             if medicamento.precisa_receita:
-                print(f"Não se esqueça de verificar a receita do medicamento {medicamento.nome}!")
+                print(f"ATENÇÃO!!! Não se esqueça de verificar a receita do medicamento {medicamento.nome}!")
             categoria = "q"
         elif isinstance(medicamento, MedicamentosFitoterapicos):
             categoria = "f"
