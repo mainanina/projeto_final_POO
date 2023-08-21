@@ -15,14 +15,18 @@ def interface_cadastrar_cliente():
     de nascimento.
     '''
     cpf = input("Digite o cpf do cliente: ")
-    nome = input("Digite o nome do cliente: ")
-    data_string = input("Digite a data de nascimento no formato aaaa-mm-dd: ")
-    while not validar_data(data_string):
-        data_string = input("Data no formato incorreto. Forneça a data de nascimento no formato aaaa-mm-dd: ")
-    dn = datetime.strptime(data_string, "%Y-%m-%d").date()
-    cliente = Clientes(cpf, nome, dn)
-    cliente.cadastrar_cliente()
-    print(f"Cliente {nome} cadastrado com sucesso!")
+    cpf_presente = Clientes.buscar_cliente(cpf)
+    if len(cpf_presente) == 0:
+        nome = input("Digite o nome do cliente: ")
+        data_string = input("Digite a data de nascimento no formato aaaa-mm-dd: ")
+        while not validar_data(data_string):
+            data_string = input("Data no formato incorreto. Forneça a data de nascimento no formato aaaa-mm-dd: ")
+        dn = datetime.strptime(data_string, "%Y-%m-%d").date()
+        cliente = Clientes(cpf, nome, dn)
+        cliente.cadastrar_cliente()
+        print(f"Cliente {nome} cadastrado com sucesso!")
+    else: 
+        print(f"Já existe um cliente cadastrado para o cpf {cpf}")
 
 
 def validar_data(data: str):
@@ -54,25 +58,29 @@ def interface_cadastro_med():
     '''
     opcao = "0"
     nome = input("Digite o nome do medicamento: ")
-    composto = input("Digite o principal composto do medicamento: ")
-    lab = incluir_laboratorio()
-    descricao = input("Digite a descrição do medicamento: ")
-    valor = float(input("Digite o valor do medicamento: "))
-    while opcao not in ["1", "2"]:
-        opcao = input("Qual o tipo do medicamento? Digite 1 para Quimioterápico ou 2 para Fitoterápico: ")
-        if opcao == "1":
-            receita = verifica_controlado()
-            quimio = MedicamentosQuimioterapicos(nome, composto, lab, descricao, valor, receita)
-            quimio.cadastrar_quimioterapico()
-            print(f"Quimioterápico {nome} cadastrado com sucesso!")
-            return quimio
-        elif opcao =="2":
-            fito = MedicamentosFitoterapicos(nome, composto, lab, descricao, valor)
-            fito.cadastrar_fitoterapico()
-            print(f"Fitoterápico {nome} cadastrado com sucesso!")
-            return fito
-        else:
-            print(f"Opção {opcao} inválida!")
+    med_presente = [med for med in Medicamentos.cadastro_medicamentos if  nome.lower() == med.nome.lower()]
+    if len(med_presente) == 0:
+        composto = input("Digite o principal composto do medicamento: ")
+        lab = incluir_laboratorio()
+        descricao = input("Digite a descrição do medicamento: ")
+        valor = float(input("Digite o valor do medicamento: "))
+        while opcao not in ["1", "2"]:
+            opcao = input("Qual o tipo do medicamento? Digite 1 para Quimioterápico ou 2 para Fitoterápico: ")
+            if opcao == "1":
+                receita = verifica_controlado()
+                quimio = MedicamentosQuimioterapicos(nome, composto, lab, descricao, valor, receita)
+                quimio.cadastrar_quimioterapico()
+                print(f"Quimioterápico {nome} cadastrado com sucesso!")
+                return quimio
+            elif opcao =="2":
+                fito = MedicamentosFitoterapicos(nome, composto, lab, descricao, valor)
+                fito.cadastrar_fitoterapico()
+                print(f"Fitoterápico {nome} cadastrado com sucesso!")
+                return fito
+            else:
+                print(f"Opção {opcao} inválida!")
+    else: 
+        print(f"Medicamento {nome} já cadastrado")
 
 
 def incluir_laboratorio():
